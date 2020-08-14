@@ -46,7 +46,7 @@ function setup() {
  
   //invisibleground to help mario not to fall.
   invisibleGround = createSprite(100,330,400,10);
-  invisibleGround.visible = false;
+ invisibleGround.visible = false;
   
  //creating groupos
   EnemysGroup = new Group();
@@ -58,19 +58,17 @@ function setup() {
   gameOver.scale = 1;
   gameOver.visible = false;
   
-    //mario and score
-  score = 0;
-  mario = createSprite(100,330,20,50);
-  mario.addAnimation("running", mario_running);
-  mario.addAnimation("mario stopped",mariostop);
-  mario.scale = 0.7;
-  
   restart = createSprite(displayWidth/2-300,250);
   restart.addImage(restartImg);
   restart.scale = 1;
   restart.visible = false;
   
-
+  //mario and score
+  score = 0;
+  mario = createSprite(100,330,20,50);
+  mario.addAnimation("running", mario_running);
+  mario.addAnimation("mario stopped",mariostop);
+  mario.scale = 0.7;
 }
 
 function draw() {
@@ -78,27 +76,31 @@ function draw() {
  
   if(gameState === PLAY){
     ground.velocityX = -7;
+ //camera position
+ camera.position.x=mario.x+400;
+ //camera.position.y=mario.y;
+ //camera.position.y>300;
  
  
-  
+ 
+console.log(mouseY);
   if(keyDown("space") && mario.y>=266) {
     mario.velocityY = -20;
+    
   }
-     camera.position.x=mario.x+400;
-  // camera.position.y=displayHeight-730;
-    if(mario.x<200){
+  if(mario.y<200){
     camera.position.y=mario.y;
-    }
-    else{
+  }
+  else{
     camera.position.y=displayHeight-730;
-    }
+  }
   coin();
   if(mario.isTouching(coing)){
     score=score+1;
     coing.destroyEach();
    // ach.play();
   }
-  console.log(mario.y);
+  //console.log(mario.y);
   mario.velocityY = mario.velocityY + 0.8
   
   if (ground.x < 0){
@@ -117,9 +119,9 @@ function draw() {
    EnemysGroup.destroyEach();
     powerg.destroyEach();
   }
-    
+
   
- 
+
     if(EnemysGroup.isTouching(mario)){
      gameState = END; 
     }
@@ -129,27 +131,30 @@ function draw() {
     gameOver.visible = true;
     restart.visible = true;
     
-    //set velcity of each game object to 0
+    //set velcity of ground,mario and nemysGroup to 0
     ground.velocityX = 0;
     mario.velocityY = 0;
     EnemysGroup.setVelocityXEach(0);
    
-   coing.setLifetimeEach(-1);
+  
     
    
    coing.setVelocityXEach(0);
     //change the mario animation
     mario.changeAnimation("mario stopped",mariostop);
     
-    //set lifetime of the game objects so that they are never destroyed
+    if(mousePressedOver(restart)) {
+      reset();
+    }
+    //set lifetime of the enemies,coins etc so that they are never destroyed
     EnemysGroup.setLifetimeEach(-1);
- 
+    coing.setLifetimeEach(-1);
+  
+    
     
   }
   
-  if(mousePressedOver(restart)) {
-    reset();
-  }
+  
   
   drawSprites();
   textSize(35)
@@ -172,6 +177,7 @@ function coin(){
 }
 function spawnEnemys() {
   if(frameCount %120 === 0) {
+   // Spawning enemies according to the camera position
     var Enemy = createSprite(camera.position.x+400,270,10,40);
     Enemy.velocityX = -7;
     
@@ -190,11 +196,13 @@ function spawnEnemys() {
               
      
       default: break;
+    
+      
     }
     
   
     Enemy.scale =0.8;
-    Enemy.lifetime =(displayWidth-620)/7;
+    Enemy.lifetime = (displayWidth-620)/7;
     //add enemies to the group
     EnemysGroup.add(Enemy);
   }
