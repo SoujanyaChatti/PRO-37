@@ -84,6 +84,14 @@ function draw() {
   if(keyDown("space") && mario.y>=266) {
     mario.velocityY = -20;
   }
+     camera.position.x=mario.x+400;
+  // camera.position.y=displayHeight-730;
+    if(mario.x<200){
+    camera.position.y=mario.y;
+    }
+    else{
+    camera.position.y=displayHeight-730;
+    }
   coin();
   if(mario.isTouching(coing)){
     score=score+1;
@@ -110,14 +118,7 @@ function draw() {
     powerg.destroyEach();
   }
     
-   camera.position.x=mario.x+400;
-  // camera.position.y=displayHeight-730;
-    if(mario.x<200){
-    camera.position.y=mario.y;
-    }
-    else{
-    camera.position.y=displayHeight-730;
-    }
+  
  
     if(EnemysGroup.isTouching(mario)){
      gameState = END; 
