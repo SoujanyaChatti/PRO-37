@@ -109,9 +109,16 @@ function draw() {
    EnemysGroup.destroyEach();
     powerg.destroyEach();
   }
+    
    camera.position.x=mario.x+400;
-   camera.position.y=displayHeight-730;
-   camera.velocityX=8;
+  // camera.position.y=displayHeight-730;
+    if(mario.x<200){
+    camera.position.y=mario.y;
+    }
+    else{
+    camera.position.y=displayHeight-730;
+    }
+ 
     if(EnemysGroup.isTouching(mario)){
      gameState = END; 
     }
