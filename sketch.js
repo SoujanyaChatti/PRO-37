@@ -135,8 +135,7 @@ function draw() {
     
     //set lifetime of the game objects so that they are never destroyed
     EnemysGroup.setLifetimeEach(-1);
-   // cloudsGroup.setLifetimeEach(-1);
-    
+ 
     
   }
   
