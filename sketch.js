@@ -6,7 +6,7 @@ var gameState = PLAY;
 var mario;
 var ground, invisibleGround, groundImage,coing;
 
-var cloudsGroup, cloudImage,powerg,mariostop;
+var powerg,mariostop;
 var EnemysGroup, enemy1, enemy2,enemy3,enemy4
 
 var score;
@@ -58,17 +58,19 @@ function setup() {
   gameOver.scale = 1;
   gameOver.visible = false;
   
+    //mario and score
+  score = 0;
+  mario = createSprite(100,330,20,50);
+  mario.addAnimation("running", mario_running);
+  mario.addAnimation("mario stopped",mariostop);
+  mario.scale = 0.7;
+  
   restart = createSprite(displayWidth/2-300,250);
   restart.addImage(restartImg);
   restart.scale = 1;
   restart.visible = false;
   
-  //mario and score
-  score = 0;
-  mario = createSprite(100,330,20,50);
-  mario.addAnimation("running", mario_running);
-  mario.addAnimation("collided",mariostop);
-  mario.scale = 0.7;
+
 }
 
 function draw() {
@@ -129,7 +131,7 @@ function draw() {
    
    coing.setVelocityXEach(0);
     //change the mario animation
-    mario.changeAnimation("stopped",mariostop);
+    mario.changeAnimation("mario stopped",mariostop);
     
     //set lifetime of the game objects so that they are never destroyed
     EnemysGroup.setLifetimeEach(-1);
@@ -158,7 +160,7 @@ function coin(){
   coins.scale=0.3;
   coins.velocityX=-5;
   coing.add(coins);
-  coins.lifetime=80;
+  coins.lifetime=(displayWidth-620)/5;
 }
 }
 function spawnEnemys() {
@@ -185,7 +187,7 @@ function spawnEnemys() {
     
   
     Enemy.scale =0.8;
-    Enemy.lifetime = 300;
+    Enemy.lifetime =(displayWidth-620)/7;
     //add enemies to the group
     EnemysGroup.add(Enemy);
   }
