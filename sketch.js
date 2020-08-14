@@ -74,7 +74,7 @@ function setup() {
 }
 
 function draw() {
-  background(180);
+  background(94,145,254);
  
   if(gameState === PLAY){
     ground.velocityX = -7;
